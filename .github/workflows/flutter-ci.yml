@@ -37,3 +37,11 @@ jobs:
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
+          
+      - name: Deploy to Firebase
+        run: |
+          npm install -g firebase-tools
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
+          --app YOUR_APP_ID \
+          --groups testers \
+          --token ${{ secrets.FIREBASE_TOKEN }}
